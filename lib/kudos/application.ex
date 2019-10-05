@@ -4,7 +4,8 @@ defmodule Kudos.Application do
 
   def start(_type, _args) do
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Kudos.Router, options: [port: 3000]}
+      {Plug.Cowboy, scheme: :http, plug: Kudos.Router, options: [port: 3000]},
+      {Kudos.Repo, []}
     ]
 
     opts = [strategy: :one_for_one, name: Kudos.Supervisor]
