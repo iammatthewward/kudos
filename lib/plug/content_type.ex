@@ -10,5 +10,4 @@ defmodule Kudos.Plug.ContentType do
       conn
     end
   end
-
 end

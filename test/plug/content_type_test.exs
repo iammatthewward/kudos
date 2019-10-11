@@ -24,5 +24,4 @@ defmodule ContentTypeTest do
 
     refute {"content-type", "application/json; charset=utf-8"} in conn.resp_headers
   end
-
 end

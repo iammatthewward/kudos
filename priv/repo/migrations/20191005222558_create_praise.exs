@@ -3,7 +3,7 @@ defmodule Kudos.Repo.Migrations.CreatePraise do
 
   def change do
     create table(:praise) do
-      add :message, :string
+      add(:message, :string)
     end
   end
 end

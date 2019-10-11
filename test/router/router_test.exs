@@ -25,5 +25,4 @@ defmodule RouterTest do
       assert response.resp_body == Jason.encode!(%{error: "Not found"})
     end
   end
-
 end

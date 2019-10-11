@@ -16,5 +16,4 @@ defmodule StatsRouterTest do
       assert response.status == 200
     end
   end
-
 end
