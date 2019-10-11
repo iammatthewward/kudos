@@ -14,6 +14,20 @@ defmodule Kudos.StatsRouter do
     |> render_json(all_results)
   end
 
+  get "/:id" do
+    result = Praise |> Repo.get(id)
+
+    {result, code} =
+      case result do
+        %Praise{} -> {result, 200}
+        nil -> {%{}, 404}
+      end
+
+    conn
+    |> put_status(code)
+    |> render_json(result)
+  end
+
   def render_json(%{status: status} = conn, data) do
     body = Jason.encode!(data)
     send_resp(conn, status || 200, body)
