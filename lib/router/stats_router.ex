@@ -29,7 +29,8 @@ defmodule Kudos.StatsRouter do
   end
 
   def render_json(%{status: status} = conn, data) do
-    body = Jason.encode!(data)
+    body = Jason.encode!(%{success: true, errors: [], messages: [], result: data})
+
     send_resp(conn, status || 200, body)
   end
 end
