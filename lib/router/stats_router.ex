@@ -1,13 +1,13 @@
 defmodule Kudos.StatsRouter do
   use Plug.Router
-  alias Kudos.Praise
+  alias Kudos.Recognition
   alias Kudos.Repo
 
   plug(:match)
   plug(:dispatch)
 
   get "/" do
-    all_results = Praise |> Repo.all()
+    all_results = Recognition |> Repo.all()
 
     conn
     |> put_status(200)
@@ -15,11 +15,11 @@ defmodule Kudos.StatsRouter do
   end
 
   get "/:id" do
-    result = Praise |> Repo.get(id)
+    result = Recognition |> Repo.get(id)
 
     {result, code} =
       case result do
-        %Praise{} -> {result, 200}
+        %Recognition{} -> {result, 200}
         nil -> {%{}, 404}
       end
 

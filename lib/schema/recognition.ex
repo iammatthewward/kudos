@@ -1,14 +1,14 @@
-defmodule Kudos.Praise do
+defmodule Kudos.Recognition do
   use Ecto.Schema
   import Ecto.Changeset
 
   @derive {Jason.Encoder, only: [:id, :message]}
-  schema "praise" do
+  schema "recognition" do
     field(:message, :string)
   end
 
-  def changeset(praise, params \\ %{}) do
-    praise
+  def changeset(recognition, params \\ %{}) do
+    recognition
     |> cast(params, [:message])
     |> validate_required([:message])
   end

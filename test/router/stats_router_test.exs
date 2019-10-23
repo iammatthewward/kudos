@@ -18,8 +18,12 @@ defmodule StatsRouterTest do
     end
 
     test "returns all stored items" do
-      praises = [%Kudos.Praise{message: "great job!"}, %Kudos.Praise{message: "awesome sauce"}]
-      [{:ok, praise1}, {:ok, praise2}] = Enum.map(praises, &Kudos.Repo.insert(&1))
+      recognitions = [
+        %Kudos.Recognition{message: "great job!"},
+        %Kudos.Recognition{message: "awesome sauce"}
+      ]
+
+      [{:ok, recognition1}, {:ok, recognition2}] = Enum.map(recognitions, &Kudos.Repo.insert(&1))
 
       response =
         :get
@@ -31,7 +35,7 @@ defmodule StatsRouterTest do
           success: true,
           errors: [],
           messages: [],
-          result: [praise1, praise2]
+          result: [recognition1, recognition2]
         })
 
       assert response.resp_body == body
