@@ -1,18 +1,18 @@
-defmodule StatsRouterTest do
+defmodule RecognitionRouterTest do
   use ExUnit.Case, async: true
   use Plug.Test
   use Kudos.RepoCase
 
-  alias Kudos.StatsRouter
+  alias Kudos.RecognitionRouter
 
-  @opts StatsRouter.init([])
+  @opts RecognitionRouter.init([])
 
   describe "GET /" do
     test "returns a success response code" do
       response =
         :get
         |> conn("/")
-        |> StatsRouter.call(@opts)
+        |> RecognitionRouter.call(@opts)
 
       assert response.status == 200
     end
@@ -28,7 +28,7 @@ defmodule StatsRouterTest do
       response =
         :get
         |> conn("/")
-        |> StatsRouter.call(@opts)
+        |> RecognitionRouter.call(@opts)
 
       {:ok, body} =
         Jason.encode(%{

@@ -1,7 +1,7 @@
 defmodule Kudos.Router do
   use Plug.Router
 
-  alias Kudos.StatsRouter
+  alias Kudos.RecognitionRouter
   alias Kudos.Plug.ContentType
 
   plug(Plug.Logger)
@@ -10,7 +10,7 @@ defmodule Kudos.Router do
   plug(:match)
   plug(:dispatch)
 
-  forward("/stats", to: StatsRouter)
+  forward("/recognition", to: RecognitionRouter)
 
   match _ do
     body = Jason.encode!(%{error: "Not found"})

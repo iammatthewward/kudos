@@ -1,4 +1,4 @@
-defmodule Kudos.StatsRouter do
+defmodule Kudos.RecognitionRouter do
   use Plug.Router
   alias Kudos.Recognition
   alias Kudos.Repo
