@@ -41,4 +41,45 @@ defmodule RecognitionRouterTest do
       assert response.resp_body == body
     end
   end
+
+  describe "GET /:id" do
+    test "when no item exists for id: returns a 404 status code" do
+      response =
+        :get
+        |> conn("/123")
+        |> RecognitionRouter.call(@opts)
+
+      assert response.status == 404
+    end
+
+    test "when item exists for id: returns a 200 status code" do
+      {:ok, recognition} = Kudos.Repo.insert(%Kudos.Recognition{message: "wowzers"})
+
+      response =
+        :get
+        |> conn("/#{recognition.id}")
+        |> RecognitionRouter.call(@opts)
+
+      assert response.status == 200
+    end
+
+    test "when item exists for id: returns item" do
+      {:ok, recognition} = Kudos.Repo.insert(%Kudos.Recognition{message: "wowzers"})
+
+      response =
+        :get
+        |> conn("/#{recognition.id}")
+        |> RecognitionRouter.call(@opts)
+
+      {:ok, body} =
+        Jason.encode(%{
+          success: true,
+          errors: [],
+          messages: [],
+          result: recognition
+        })
+
+      assert response.resp_body == body
+    end
+  end
 end
