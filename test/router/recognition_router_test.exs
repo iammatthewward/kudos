@@ -1,4 +1,5 @@
 defmodule RecognitionRouterTest do
+  import RecognitionRouter.Test.Helpers
   use ExUnit.Case, async: true
   use Plug.Test
   use Kudos.RepoCase
@@ -8,6 +9,8 @@ defmodule RecognitionRouterTest do
   @opts RecognitionRouter.init([])
 
   describe "GET /" do
+    setup :insert_many
+
     test "returns a success response code" do
       response =
         :get
@@ -17,32 +20,21 @@ defmodule RecognitionRouterTest do
       assert response.status == 200
     end
 
-    test "returns all stored items" do
-      recognitions = [
-        %Kudos.Recognition{message: "great job!"},
-        %Kudos.Recognition{message: "awesome sauce"}
-      ]
-
-      [{:ok, recognition1}, {:ok, recognition2}] = Enum.map(recognitions, &Kudos.Repo.insert(&1))
-
+    test "returns all stored items", %{recognitions: recognitions} do
       response =
         :get
         |> conn("/")
         |> RecognitionRouter.call(@opts)
 
-      {:ok, body} =
-        Jason.encode(%{
-          success: true,
-          errors: [],
-          messages: [],
-          result: [recognition1, recognition2]
-        })
+      body = get_success_body(recognitions)
 
       assert response.resp_body == body
     end
   end
 
   describe "GET /:id" do
+    setup :insert_one
+
     test "when no item exists for id: returns a 404 status code" do
       response =
         :get
@@ -52,9 +44,7 @@ defmodule RecognitionRouterTest do
       assert response.status == 404
     end
 
-    test "when item exists for id: returns a 200 status code" do
-      {:ok, recognition} = Kudos.Repo.insert(%Kudos.Recognition{message: "wowzers"})
-
+    test "when item exists for id: returns a 200 status code", %{recognition: recognition} do
       response =
         :get
         |> conn("/#{recognition.id}")
@@ -63,21 +53,13 @@ defmodule RecognitionRouterTest do
       assert response.status == 200
     end
 
-    test "when item exists for id: returns item" do
-      {:ok, recognition} = Kudos.Repo.insert(%Kudos.Recognition{message: "wowzers"})
-
+    test "when item exists for id: returns item", %{recognition: recognition} do
       response =
         :get
         |> conn("/#{recognition.id}")
         |> RecognitionRouter.call(@opts)
 
-      {:ok, body} =
-        Jason.encode(%{
-          success: true,
-          errors: [],
-          messages: [],
-          result: recognition
-        })
+      body = get_success_body(recognition)
 
       assert response.resp_body == body
     end
