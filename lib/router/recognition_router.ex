@@ -28,6 +28,19 @@ defmodule Kudos.RecognitionRouter do
     |> render_json(result)
   end
 
+  post "/" do
+    %{ body_params: params } = conn
+    message = Map.get(params, "message")
+
+    changeset = Recognition.changeset(%Recognition{ message: message }, %{})
+
+    { :ok, recognition } = Repo.insert(changeset)
+
+    conn
+    |> put_status(201)
+    |> render_json(recognition)
+  end
+
   def render_json(%{status: status} = conn, data) do
     body = Jason.encode!(%{success: true, errors: [], messages: [], result: data})
 
