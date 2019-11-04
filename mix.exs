@@ -26,7 +26,9 @@ defmodule Kudos.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.1"},
       {:ecto_sql, "~> 3.0"},
-      {:postgrex, "~> 0.15"}
+      {:postgrex, "~> 0.15"},
+      {:tesla, "~> 1.3.0"},
+      {:hackney, "~> 1.14.0"}
     ]
   end
 

@@ -29,12 +29,12 @@ defmodule Kudos.RecognitionRouter do
   end
 
   post "/" do
-    %{ body_params: params } = conn
+    %{body_params: params} = conn
     message = Map.get(params, "message")
 
-    changeset = Recognition.changeset(%Recognition{ message: message }, %{})
+    changeset = Recognition.changeset(%Recognition{message: message}, %{})
 
-    { :ok, recognition } = Repo.insert(changeset)
+    {:ok, recognition} = Repo.insert(changeset)
 
     conn
     |> put_status(201)

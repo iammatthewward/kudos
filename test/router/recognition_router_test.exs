@@ -71,7 +71,7 @@ defmodule RecognitionRouterTest do
     test "when item successfully created: returns a 201 status code" do
       response =
         :post
-        |> conn("/", %{ message: "Well done" })
+        |> conn("/", %{message: "Well done"})
         |> RecognitionRouter.call(@opts)
 
       assert response.status == 201
@@ -80,7 +80,7 @@ defmodule RecognitionRouterTest do
     test "when item successfully created: returns item " do
       response =
         :post
-        |> conn("/", %{ message: "Well done" })
+        |> conn("/", %{message: "Well done"})
         |> RecognitionRouter.call(@opts)
 
       item = Repo.one(Recognition)
